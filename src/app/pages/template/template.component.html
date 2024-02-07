@@ -69,6 +69,69 @@
     </div>
   </div>
 
+  <div class="form-group row my-1">
+    <label class="col-2 col-form-label">Pais</label>
+    <div class="col-8">
+
+      <select class="form-control" 
+        name="pais"
+        required
+        [ngModel]="usuario.pais"
+        [class.is-invalid]="pais.invalid && pais.touched"
+        [disabled]="paises.length === 0"
+        #pais="ngModel"
+        >
+        <!-- <option value="" disabled selected>Selecciona una opcion</option> -->
+        <option *ngFor="let pais of paises" [value]="pais.codigo">
+          {{ pais.nombre }}
+        </option>
+      </select>
+
+      <small
+        class="form-text text-danger"
+        *ngIf="pais.invalid && pais.touched"
+        >Debe seleccionar una opcion.
+      </small>
+
+    </div>
+  </div>
+
+  <div class="form-group row my-1">
+    <label class="col-2 col-form-label">Genero</label>
+    <div class="col-8">
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" 
+                type="radio" 
+                name="gereno" 
+                value="M" 
+                required 
+                [class.is-invalid]="gereno.invalid && gereno.touched"
+                [ngModel]="usuario.genero" 
+                #gereno="ngModel" />
+        <label class="form-check-label">Masculino</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" 
+                type="radio" 
+                name="gereno" 
+                value="F"                
+                required
+                [class.is-invalid]="gereno.invalid && gereno.touched"
+                [ngModel]="usuario.genero" 
+                #gereno="ngModel" />
+        <label class="form-check-label">Femenino</label>
+      </div>
+
+      <small
+        class="form-text text-danger"
+        *ngIf="gereno.invalid && gereno.touched"
+        >Debe seleccionar una opcion.
+      </small>
+
+    </div>
+  </div>
+
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
