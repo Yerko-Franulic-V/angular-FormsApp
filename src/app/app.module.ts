@@ -6,7 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TemplateComponent } from './pages/template/template.component';
 import { ReactiveComponent } from './pages/reactive/reactive.component';
-import { FormsModule } from '@angular/forms';
+
+import { FormsModule } from '@angular/forms'; //Para validaciones de formulario por template
+import { ReactiveFormsModule } from '@angular/forms'; //Para validaciones de formulario reactivos
+
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

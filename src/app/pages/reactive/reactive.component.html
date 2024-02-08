@@ -1,50 +1,124 @@
 <h4>Formularios <small> tipo </small></h4>
-<hr>
-<form autocomplete="off">
-
+<hr />
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
   <div>
-
-    <div class="form-group row">
+    <div class="form-group row my-1">
       <label class="col-2 col-form-label">Nombre</label>
-      <div class="col-8">
-
-        <input class="form-control"
-               type="text"
-               placeholder="Nombre">
+      <div class="col">
+        <!-- [class.is-invalid]="this.forma.get('nombre')?.invalid && this.forma.get('nombre')?.touched" -->
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Nombre"
+          formControlName="nombre"
+          [class.is-invalid]="nombreNoValido"
+        />
+        <small
+          class="form-text text-danger"
+          *ngIf="nombreNoValido"
+          >Campo obligatorio - (Ingrese minimo 5 letras)
+        </small>
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row my-1">
       <label class="col-2 col-form-label">Apellido</label>
-      <div class="col-8">
-
-        <input class="form-control"
-               type="text"
-               placeholder="Apellido">
+      <div class="col">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Apellido"
+          formControlName="apellido"
+          [class.is-invalid]="apellidoNoValido"
+        />
+        <small
+          class="form-text text-danger"
+          *ngIf="apellidoNoValido"
+          >Campo obligatorio
+        </small>
       </div>
     </div>
-
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Correo</label>
-    <div class="col-8">
-
-      <input class="form-control"
-             type="email"
-             placeholder="Correo electrónico">
+  <div class="form-group row my-1">
+    <label class="col-2 col-form-label">Correo 1</label>
+    <div class="col">
+      <input
+        class="form-control"
+        type="email"
+        placeholder="Correo electrónico"
+        formControlName="correo1"
+        [class.is-invalid]="correo1NoValido"
+      />
+      <small
+        class="form-text text-danger"
+        *ngIf="correo1NoValido"
+        >Correo invalido.
+      </small>
     </div>
   </div>
 
+  <div class="form-group row my-1">
+    <label class="col-2 col-form-label">Correo 2</label>
+    <div class="col">
+      <input
+        class="form-control"
+        type="email"
+        placeholder="Correo electrónico"
+        formControlName="correo2"
+        [class.is-invalid]="correo2NoValido"
+      />
+      <small
+        class="form-text text-danger"
+        *ngIf="correo2NoValido"
+        >Correo invalido.
+      </small>
+    </div>
+  </div>
 
+  <div class="form-group row my-1" formGroupName="direccion">
+    <label class="col-2 col-form-label">Dirección</label>
+    <div class="form-row col">
+
+      <div class="col mb-1">
+        <input
+        class="form-control"
+        type="text"
+        placeholder="Distrito"
+        formControlName="distrito"
+        [class.is-invalid]="distritoNoValido"
+         />
+      </div>
+
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        placeholder="Ciudad"
+        formControlName="ciudad"
+        [class.is-invalid]="ciudadNoValido"
+         />
+      </div>
+
+    </div>
+  </div>
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
-    <div class="input-group col-md-8">
+    <div class="input-group">
       <button type="submit" class="btn btn-outline-primary btn-block">
         Guardar
       </button>
     </div>
   </div>
-
 </form>
+
+<hr />
+<pre>
+  Estado del formulario: {{ forma.valid}}
+  <br>
+  Status: {{ forma.status }}
+</pre>
+<pre>
+   {{ forma.value | json }}
+</pre>

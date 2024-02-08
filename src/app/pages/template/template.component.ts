@@ -64,6 +64,7 @@ export class TemplateComponent {
       nombre: '[Seleccione Pais]',
       codigo: '',
     });
+
   }
 
   guardar(forma: NgForm) {
@@ -81,4 +82,5 @@ export class TemplateComponent {
 
     console.log(forma.value);
   }
+  
 }
