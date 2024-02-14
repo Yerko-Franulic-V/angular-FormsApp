@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidadoresService } from '../../services/validadores.service';
 
 @Component({
   selector: 'app-reactive',
@@ -9,11 +10,12 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ReactiveComponent {
   forma: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private validadores: ValidadoresService) {
     //this.crearFormulario();
     this.forma = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(5)]],
-      apellido: ['', Validators.required],
+      apellido: ['', [Validators.required, this.validadores.noHerrera]],
       correo1: ['', [Validators.required, Validators.email]],
       correo2: [
         '',
@@ -27,10 +29,10 @@ export class ReactiveComponent {
         ciudad: ['', Validators.required],
       }),
       pasatiempos: this.fb.array([
-        [],[],[],[],[]
+        //[],[],[],[],[]
       ]),
     });
-    
+
     this.cargarDataAlFormulario();
   }
 
@@ -107,6 +109,16 @@ export class ReactiveComponent {
         ciudad: 'Santiago',
       },
     });
+
+    ['Comer','Dormir'].forEach(valor => this.pasatiempos.push( this.fb.control(valor) ));
+  }
+
+  agregarPasatiempo(){
+    this.pasatiempos.push( this.fb.control('') );
+  }
+
+  borrarPasatiempo(indice: number){
+    this.pasatiempos.removeAt(indice);
   }
 
   guardar() {
