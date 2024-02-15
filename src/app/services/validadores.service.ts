@@ -14,8 +14,7 @@ export class ValidadoresService {
       return { noHerrera: true }
     }
     
-    // return null;
-    return {noHerrera: false};
+    return null;
   }
 
 
