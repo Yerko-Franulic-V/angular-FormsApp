@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+interface ErrorValidate{
+  [s:string]: boolean
+}
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +13,7 @@ export class ValidadoresService {
 
   constructor() { }
 
-  noHerrera( control: FormControl): {[s:string]: boolean}{
+  noHerrera( control: FormControl): ErrorValidate{
 
     if( control.value?.toLowerCase() === 'herrera2'){
       return { noHerrera: true }
@@ -17,16 +22,40 @@ export class ValidadoresService {
     return null;
   }
 
+  passwordsIguales(pass1Name: string, pass2Name: string) {
 
-  // noFranulich( control: FormControl): boolean{
+    return ( formGroup: FormGroup ) => {
 
-  //   //return control.value?.toLowerCase() === 'franulich' ? true : false ;
-  //   if ( control.value?.toLowerCase() === 'franulich') {
-  //     return true;
-  //   }
-    
-  //   return false;    
+      const pass1Control = formGroup.controls[pass1Name];
+      const pass2Control = formGroup.controls[pass2Name];
 
-  // }
+      if ( pass1Control.value === pass2Control.value ) {
+        pass2Control.setErrors(null);
+      } else {
+        pass2Control.setErrors({noEsIgual: true});        
+      }
+    }
+  }
+
+  existeUsuario( control: FormControl ): Promise<ErrorValidate> | Observable<ErrorValidate> {
+
+    if( control.value ) {
+      return Promise.resolve(null);
+    }
+
+    return new Promise( (resolve, reject) => {
+      setTimeout(() => {
+
+        if( control.value === 'strider') {
+          resolve({ existe: true });
+        } else {
+          resolve( null);
+        }
+
+      }, 3500);
+    })
+
+  }
 
 }
+
