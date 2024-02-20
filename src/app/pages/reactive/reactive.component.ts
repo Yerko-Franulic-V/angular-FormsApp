@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidadoresService } from '../../services/validadores.service';
-import { __values } from 'tslib';
+//import { __values } from 'tslib';
 
 @Component({
   selector: 'app-reactive',
@@ -14,27 +14,9 @@ export class ReactiveComponent {
   constructor(private fb: FormBuilder,
               private validadores: ValidadoresService) {
                 
-    //this.crearFormulario();
-    this.forma = this.fb.group({
-      nombre    : ['', [Validators.required, Validators.minLength(5)]],
-      apellido  : ['', [Validators.required, this.validadores.noHerrera]],
-      correo1   : ['', [Validators.required, Validators.email]],
-      correo2   : ['', [Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
-      usuario   : ['', , this.validadores.existeUsuario ],
-      pass1     : ['', Validators.required ],
-      pass2     : ['', Validators.required],
-      direccion : this.fb.group({
-        distrito: ['', Validators.required],
-        ciudad  : ['', Validators.required],
-      }),
-      pasatiempos : this.fb.array([
-        //[],[],[],[],[]
-      ]),
-    },{
-      Validators: this.validadores.passwordsIguales('pass1','pass2')
-    });
-
+    this.crearFormulario();
     this.cargarDataAlFormulario();
+    this.crearListeners();
   }
 
   ngOnInit(): void {}
@@ -80,9 +62,9 @@ export class ReactiveComponent {
       apellido  : ['', [Validators.required, this.validadores.noHerrera]],
       correo1   : ['', [Validators.required, Validators.email]],
       correo2   : ['', [Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
-      usuario   : ['', Validators.required],
+      usuario   : ['', , this.validadores.existeUsuario ],
       pass1     : ['', Validators.required ],
-      pass2     : ['', Validators.required ],
+      pass2     : ['', Validators.required],
       direccion : this.fb.group({
         distrito: ['', Validators.required],
         ciudad  : ['', Validators.required],
@@ -93,6 +75,19 @@ export class ReactiveComponent {
     },{
       Validators: this.validadores.passwordsIguales('pass1','pass2')
     });
+  }
+
+  crearListeners(){
+  /*
+    this.forma.valueChanges.subscribe( valor => {
+      console.log(valor);
+    });
+
+    this.forma.statusChanges.subscribe( status => console.log({ status }));
+  */
+    
+    this.forma.get('nombre').valueChanges.subscribe( console.log );
+
   }
 
   cargarDataAlFormulario() {
@@ -136,6 +131,7 @@ export class ReactiveComponent {
       return;
     }
 
+    console.log(this.forma.value);
     this.forma.reset({
       nombre: '',
       apellido: '',
@@ -148,6 +144,6 @@ export class ReactiveComponent {
         ciudad: '',
       },
     });
-    console.log(this.forma.value);
+    
   }
 }
